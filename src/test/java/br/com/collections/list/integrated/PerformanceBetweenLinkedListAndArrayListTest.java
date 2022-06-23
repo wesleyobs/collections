@@ -15,9 +15,9 @@ public class PerformanceBetweenLinkedListAndArrayListTest {
 
     private static final Logger logger = LogManager.getLogger(PerformanceBetweenLinkedListAndArrayListTest.class);
     private static final int ARRAY_SIZE = 10000000;
-    private static int NUMBER_ELEMENTS_TO_BE_ADDED_RAMDONLY = 50000;
-    private static int NUMBER_ELEMENTS_TO_BE_REMOVED_FROM_LIST = 50000;
-    private static int NUMBER_ELEMENTS_TO_BE_FOUND = 50000;
+    private static int NUMBER_ELEMENTS_TO_BE_ADDED_RAMDONLY = 5000;
+    private static int NUMBER_ELEMENTS_TO_BE_REMOVED_FROM_LIST = 5000;
+    private static int NUMBER_ELEMENTS_TO_BE_FOUND = 5000;
     private final String[] stringArray;
     private final ResultTimeExecution.BuilderResultTimeExecution builderResultTimeExecution;
 
