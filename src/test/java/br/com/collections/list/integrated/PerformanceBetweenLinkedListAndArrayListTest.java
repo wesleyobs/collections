@@ -23,11 +23,11 @@ public class PerformanceBetweenLinkedListAndArrayListTest {
 
     public PerformanceBetweenLinkedListAndArrayListTest() {
         this.stringArray = new String[ARRAY_SIZE];
-        this.builderResultTimeExecution = new ResultTimeExecution.BuilderResultTimeExecution("ms",
-                ARRAY_SIZE,
-                NUMBER_ELEMENTS_TO_BE_ADDED_RAMDONLY,
-                NUMBER_ELEMENTS_TO_BE_REMOVED_FROM_LIST,
-                NUMBER_ELEMENTS_TO_BE_FOUND);
+        this.builderResultTimeExecution = new ResultTimeExecution.BuilderResultTimeExecution("ms")
+                .setDefaultNumberElementsToBeAddedAtList(ARRAY_SIZE)
+                .setNumberExecutionsOfMethodAddUsingRandomIndex(NUMBER_ELEMENTS_TO_BE_ADDED_RAMDONLY)
+                .setNumberExecutionsOfMethodRemove(NUMBER_ELEMENTS_TO_BE_REMOVED_FROM_LIST)
+                .setNumberExecutionsOfMethodGet(NUMBER_ELEMENTS_TO_BE_FOUND);
     }
 
     @BeforeAll

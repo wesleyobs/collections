@@ -5,19 +5,19 @@ import org.apache.log4j.Logger;
 
 public class ResultTimeExecution {
     private static final Logger logger = LogManager.getLogger(ResultTimeExecution.class);
-    private long addArrayListResultTime;
-    private long addLinkedListResultTime;
-    private long addArrayListInRandomPositionResultTime;
-    private long addLinkedListInRandomPositionResultTime;
-    private long removeElementsFromListRandomlyArrayListTime;
-    private long removeElementsFromListRandomlyLinkedListListTime;
-    private long getElementsByRandomIndexArrayListTime;
-    private long getElementsByRandomIndexLinkedListListTime;
-    private String timeUnity;
-    private final int defaultSizeList;
-    private int numberElementsToBeAddedRamdonly;
-    private int numberElementsToBeRemovedFromList;
-    private int numberElementsToBeFound;
+    private final long addArrayListResultTime;
+    private final long addLinkedListResultTime;
+    private final long addArrayListInRandomPositionResultTime;
+    private final long addLinkedListInRandomPositionResultTime;
+    private final long removeElementsFromListRandomlyArrayListTime;
+    private final long removeElementsFromListRandomlyLinkedListListTime;
+    private final long getElementsByRandomIndexArrayListTime;
+    private final long getElementsByRandomIndexLinkedListListTime;
+    private final String timeUnity;
+    private final int defaultNumberElementsToBeAddedAtList;
+    private final int numberExecutionsOfMethodAddUsingRandomIndex;
+    private final int numberExecutionsOfMethodRemove;
+    private final int numberExecutionsOfMethodGet;
 
     private ResultTimeExecution(final long addArrayListResultTime,
                                 final long addLinkedListResultTime,
@@ -28,10 +28,10 @@ public class ResultTimeExecution {
                                 final long getElementsByRandomIndexArrayListTime,
                                 final long getElementsByRandomIndexLinkedListListTime,
                                 final String timeUnity,
-                                final int defaultSizeList,
-                                final int numberElementsToBeAddedRamdonly,
-                                final int numberElementsToBeRemovedFromList,
-                                final int numberElementsToBeFound) {
+                                final int defaultNumberElementsToBeAddedAtList,
+                                final int numberExecutionsOfMethodAddUsingRandomIndex,
+                                final int numberExecutionsOfMethodRemove,
+                                final int numberExecutionsOfMethodGet) {
         this.addArrayListResultTime = addArrayListResultTime;
         this.addLinkedListResultTime = addLinkedListResultTime;
         this.addArrayListInRandomPositionResultTime = addArrayListInRandomPositionResultTime;
@@ -41,10 +41,10 @@ public class ResultTimeExecution {
         this.getElementsByRandomIndexArrayListTime = getElementsByRandomIndexArrayListTime;
         this.getElementsByRandomIndexLinkedListListTime = getElementsByRandomIndexLinkedListListTime;
         this.timeUnity = timeUnity;
-        this.defaultSizeList = defaultSizeList;
-        this.numberElementsToBeAddedRamdonly = numberElementsToBeAddedRamdonly;
-        this.numberElementsToBeRemovedFromList = numberElementsToBeRemovedFromList;
-        this.numberElementsToBeFound = numberElementsToBeFound;
+        this.defaultNumberElementsToBeAddedAtList = defaultNumberElementsToBeAddedAtList;
+        this.numberExecutionsOfMethodAddUsingRandomIndex = numberExecutionsOfMethodAddUsingRandomIndex;
+        this.numberExecutionsOfMethodRemove = numberExecutionsOfMethodRemove;
+        this.numberExecutionsOfMethodGet = numberExecutionsOfMethodGet;
     }
 
     private boolean isAddArrayListFasterThanLinkedList() {
@@ -88,10 +88,10 @@ public class ResultTimeExecution {
     }
 
     private void executionInfo() {
-        this.logInfo("Tamanho default da lista %s", this.defaultSizeList);
-        this.logInfo("Total de elementos adicionados via add(index, value) %s", this.numberElementsToBeAddedRamdonly);
-        this.logInfo("Total de elementos removidos da lista via remove(index) %s", this.numberElementsToBeRemovedFromList);
-        this.logInfo("Total de vezes que o metodo get(index) foi executado em cada lista randomicamente %s", this.numberElementsToBeFound);
+        this.logInfo("Number of elements to be added at list during the tests %s", this.defaultNumberElementsToBeAddedAtList);
+        this.logInfo("Number of executions of the method add(index, value) %s", this.numberExecutionsOfMethodAddUsingRandomIndex);
+        this.logInfo("Number of executions of the method remove(index) %s", this.numberExecutionsOfMethodRemove);
+        this.logInfo("Number of executions of the method get(index) %s", this.numberExecutionsOfMethodGet);
     }
 
     private void resultsOfAddMethod() {
@@ -180,22 +180,14 @@ public class ResultTimeExecution {
         private long removeElementsFromListRandomlyLinkedListListTime;
         private long getElementsByRandomIndexArrayListTime;
         private long getElementsByRandomIndexLinkedListListTime;
-        private String timeUnity;
-        private int defaultSizeList;
-        private int numberElementsToBeAddedRamdonly;
-        private int numberElementsToBeRemovedFromList;
-        private int numberElementsToBeFound;
+        private final String timeUnity;
+        private int defaultNumberElementsToBeAddedAtList;
+        private int numberExecutionsOfMethodAddUsingRandomIndex;
+        private int numberExecutionsOfMethodRemove;
+        private int numberExecutionsOfMethodGet;
 
-        public BuilderResultTimeExecution(final String timeUnity,
-                                          final int defaultSizeList,
-                                          final int numberElementsToBeAddedRamdonly,
-                                          final int numberElementsToBeRemovedFromList,
-                                          final int numberElementsToBeFound) {
+        public BuilderResultTimeExecution(final String timeUnity) {
             this.timeUnity = timeUnity;
-            this.defaultSizeList = defaultSizeList;
-            this.numberElementsToBeAddedRamdonly = numberElementsToBeAddedRamdonly;
-            this.numberElementsToBeRemovedFromList = numberElementsToBeRemovedFromList;
-            this.numberElementsToBeFound = numberElementsToBeFound;
         }
 
         public BuilderResultTimeExecution withAddArrayListResultTime(final long addArrayListResultTimee) {
@@ -238,6 +230,25 @@ public class ResultTimeExecution {
             return this;
         }
 
+        public BuilderResultTimeExecution setDefaultNumberElementsToBeAddedAtList(final int defaultNumberElementsToBeAddedAtList) {
+            this.defaultNumberElementsToBeAddedAtList = defaultNumberElementsToBeAddedAtList;
+            return this;
+        }
+
+        public BuilderResultTimeExecution setNumberExecutionsOfMethodAddUsingRandomIndex(final int numberExecutionsOfMethodAddUsingRandomIndex) {
+            this.numberExecutionsOfMethodAddUsingRandomIndex = numberExecutionsOfMethodAddUsingRandomIndex;
+            return this;
+        }
+
+        public BuilderResultTimeExecution setNumberExecutionsOfMethodRemove(final int numberExecutionsOfMethodRemove) {
+            this.numberExecutionsOfMethodRemove = numberExecutionsOfMethodRemove;
+            return this;
+        }
+
+        public BuilderResultTimeExecution setNumberExecutionsOfMethodGet(final int numberExecutionsOfMethodGet) {
+            this.numberExecutionsOfMethodGet = numberExecutionsOfMethodGet;
+            return this;
+        }
 
         public ResultTimeExecution build() {
             return new ResultTimeExecution(this.addArrayListResultTime,
@@ -249,10 +260,10 @@ public class ResultTimeExecution {
                     this.getElementsByRandomIndexArrayListTime,
                     this.getElementsByRandomIndexLinkedListListTime,
                     this.timeUnity,
-                    this.defaultSizeList,
-                    this.numberElementsToBeAddedRamdonly,
-                    this.numberElementsToBeRemovedFromList,
-                    this.numberElementsToBeFound
+                    this.defaultNumberElementsToBeAddedAtList,
+                    this.numberExecutionsOfMethodAddUsingRandomIndex,
+                    this.numberExecutionsOfMethodRemove,
+                    this.numberExecutionsOfMethodGet
             );
         }
     }
