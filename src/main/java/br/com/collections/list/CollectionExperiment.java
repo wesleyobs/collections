@@ -1,49 +1,71 @@
 package br.com.collections.list;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 public class CollectionExperiment {
-    private final List<String> list;
+    private final List<Integer> list;
+    private final int initialNumberElementsToBeAddedAtList;
+    private final Random random;
 
-    public CollectionExperiment(final List list) {
+    public CollectionExperiment(final List list, int initialNumberElementsToBeAddedAtList) {
+        this.initialNumberElementsToBeAddedAtList = initialNumberElementsToBeAddedAtList;
         this.list = list;
+        this.random = new Random();
+        this.add(initialNumberElementsToBeAddedAtList);
     }
 
-    public void toList(final String[] stringArray) {
-        Arrays.stream(stringArray).forEach(string -> this.list.add(string));
-    }
-
-    public void addElementsAtGeneratedAndDeterminedRandomPosition(int numberElementsToBeAddedRandomly) {
-        final Random random = new Random();
-        while (numberElementsToBeAddedRandomly >= 1) {
-            int position = random.nextInt(this.list.size() - 1);
-            this.list.add(position, UUID.randomUUID().toString());
-            numberElementsToBeAddedRandomly--;
+    public void add(int iterationNumber) {
+        while (iterationNumber >= 1) {
+            this.list.add(this.random.nextInt());
+            iterationNumber--;
         }
     }
 
-    public void removeElementsFromListRandomly(int numberElementsToBeRemovedFromList) {
-        final Random random = new Random();
-        while (numberElementsToBeRemovedFromList >= 1) {
-            int position = random.nextInt(this.list.size() - 1);
+    public void addElementsAtGeneratedAndDeterminedRandomPosition(int numberOfIteration) {
+        while (numberOfIteration >= 1) {
+            int positionAndValue = random.nextInt(this.list.size() - 1);
+            this.list.add(positionAndValue, positionAndValue);
+            numberOfIteration--;
+        }
+    }
+
+    public void removeElementsFromListRandomly(int numberOfIteration) {
+        while (numberOfIteration >= 1) {
+            int position = this.random.nextInt(this.list.size() - 1);
             this.list.remove(position);
-            numberElementsToBeRemovedFromList--;
+            numberOfIteration--;
         }
     }
 
-    public void getElementsByRandomIndex(int numberElementsToBeFound) {
-        final Random random = new Random();
-        while (numberElementsToBeFound >= 1) {
-            int position = random.nextInt(this.list.size() - 1);
+    public void getElementsByRandomIndex(int numberOfIteration) {
+        while (numberOfIteration >= 1) {
+            int position = this.random.nextInt(this.list.size() - 1);
             this.list.get(position);
-            numberElementsToBeFound--;
+            numberOfIteration--;
         }
+    }
+
+    public void backToInitialListSize() {
+        this.removeIfListIsLargerThanInitialSize();
+        this.addIfListIsSmallerThanInitialSize();
+    }
+
+
+    private void removeIfListIsLargerThanInitialSize() {
+        if (this.list.size() > this.initialNumberElementsToBeAddedAtList)
+            this.removeElementsFromListRandomly(this.list.size() - this.initialNumberElementsToBeAddedAtList);
+    }
+
+
+    private void addIfListIsSmallerThanInitialSize() {
+        if (this.list.size() < this.initialNumberElementsToBeAddedAtList)
+            this.add(this.initialNumberElementsToBeAddedAtList - this.list.size());
     }
 
     public final List getList() {
         return this.list;
     }
+
+
 }
