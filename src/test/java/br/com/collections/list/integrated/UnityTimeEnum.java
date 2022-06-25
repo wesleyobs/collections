@@ -1,7 +1,7 @@
 package br.com.collections.list.integrated;
 
 public enum UnityTimeEnum {
-    NANOSECONDS(999999, "ns"),
+    NANOSECONDS(1, "ns"),
     NANOSECONDS_IN_MILLISECONDS(1000000, "ms"),
     NANOSECONDS_IN_SECONDS(1000000000, "s");
 

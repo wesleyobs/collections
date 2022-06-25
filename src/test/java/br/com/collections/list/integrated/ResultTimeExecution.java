@@ -5,28 +5,28 @@ import org.apache.log4j.Logger;
 
 public class ResultTimeExecution {
     private static final Logger logger = LogManager.getLogger(ResultTimeExecution.class);
-    private final long addArrayListResultTime;
-    private final long addLinkedListResultTime;
-    private final long addArrayListInRandomPositionResultTime;
-    private final long addLinkedListInRandomPositionResultTime;
-    private final long removeElementsFromListRandomlyArrayListTime;
-    private final long removeElementsFromListRandomlyLinkedListListTime;
-    private final long getElementsByRandomIndexArrayListTime;
-    private final long getElementsByRandomIndexLinkedListListTime;
+    private final UnityTime addArrayListResultTime;
+    private final UnityTime addLinkedListResultTime;
+    private final UnityTime addArrayListInRandomPositionResultTime;
+    private final UnityTime addLinkedListInRandomPositionResultTime;
+    private final UnityTime removeElementsFromListRandomlyArrayListTime;
+    private final UnityTime removeElementsFromListRandomlyLinkedListListTime;
+    private final UnityTime getElementsByRandomIndexArrayListTime;
+    private final UnityTime getElementsByRandomIndexLinkedListListTime;
     private final int initialNumberElementsToBeAddedAtList;
     private final int numberExecutionsOfMethodAdd;
     private final int numberExecutionsOfMethodAddUsingRandomIndex;
     private final int numberExecutionsOfMethodRemove;
     private final int numberExecutionsOfMethodGet;
 
-    private ResultTimeExecution(final long addArrayListResultTime,
-                                final long addLinkedListResultTime,
-                                final long addArrayListInRandomPositionResultTime,
-                                final long addLinkedListInRandomPositionResultTime,
-                                final long removeElementsFromListRandomlyArrayListTime,
-                                final long removeElementsFromListRandomlyLinkedListListTime,
-                                final long getElementsByRandomIndexArrayListTime,
-                                final long getElementsByRandomIndexLinkedListListTime,
+    private ResultTimeExecution(final UnityTime addArrayListResultTime,
+                                final UnityTime addLinkedListResultTime,
+                                final UnityTime addArrayListInRandomPositionResultTime,
+                                final UnityTime addLinkedListInRandomPositionResultTime,
+                                final UnityTime removeElementsFromListRandomlyArrayListTime,
+                                final UnityTime removeElementsFromListRandomlyLinkedListListTime,
+                                final UnityTime getElementsByRandomIndexArrayListTime,
+                                final UnityTime getElementsByRandomIndexLinkedListListTime,
                                 final int numberExecutionsOfMethodAdd,
                                 final int initialNumberElementsToBeAddedAtList,
                                 final int numberExecutionsOfMethodAddUsingRandomIndex,
@@ -48,35 +48,35 @@ public class ResultTimeExecution {
     }
 
     private boolean isAddArrayListFasterThanLinkedList() {
-        return this.addArrayListResultTime < this.addLinkedListResultTime;
+        return this.addArrayListResultTime.getTimeInNanoseconds() < this.addLinkedListResultTime.getTimeInNanoseconds();
     }
 
     private boolean isAddArrayListTimeEqualsToLinkedList() {
-        return this.addArrayListResultTime == this.addLinkedListResultTime;
+        return this.addArrayListResultTime.getTimeInNanoseconds() == this.addLinkedListResultTime.getTimeInNanoseconds();
     }
 
     private boolean isAddArrayListInRandomPositionFasterThanLinkedList() {
-        return this.addArrayListInRandomPositionResultTime < this.addLinkedListInRandomPositionResultTime;
+        return this.addArrayListInRandomPositionResultTime.getTimeInNanoseconds() < this.addLinkedListInRandomPositionResultTime.getTimeInNanoseconds();
     }
 
     private boolean isAddArrayListTimeInRandomPositionEqualsToLinkedList() {
-        return this.addArrayListInRandomPositionResultTime == this.addLinkedListInRandomPositionResultTime;
+        return this.addArrayListInRandomPositionResultTime.getTimeInNanoseconds() == this.addLinkedListInRandomPositionResultTime.getTimeInNanoseconds();
     }
 
     private boolean isRemoveFromArrayListFasterThanLinkedList() {
-        return this.removeElementsFromListRandomlyArrayListTime < this.removeElementsFromListRandomlyLinkedListListTime;
+        return this.removeElementsFromListRandomlyArrayListTime.getTimeInNanoseconds() < this.removeElementsFromListRandomlyLinkedListListTime.getTimeInNanoseconds();
     }
 
     private boolean isTimeToRemoveFromArrayListEqualsToLinkedList() {
-        return this.removeElementsFromListRandomlyArrayListTime == this.removeElementsFromListRandomlyLinkedListListTime;
+        return this.removeElementsFromListRandomlyArrayListTime.getTimeInNanoseconds() == this.removeElementsFromListRandomlyLinkedListListTime.getTimeInNanoseconds();
     }
 
     private boolean isGetFromArrayListFasterThanLinkedList() {
-        return this.getElementsByRandomIndexArrayListTime < this.getElementsByRandomIndexLinkedListListTime;
+        return this.getElementsByRandomIndexArrayListTime.getTimeInNanoseconds() < this.getElementsByRandomIndexLinkedListListTime.getTimeInNanoseconds();
     }
 
     private boolean isTimeToGetFromArrayListEqualsToLinkedList() {
-        return this.getElementsByRandomIndexArrayListTime == this.getElementsByRandomIndexLinkedListListTime;
+        return this.getElementsByRandomIndexArrayListTime.getTimeInNanoseconds() == this.getElementsByRandomIndexLinkedListListTime.getTimeInNanoseconds();
     }
 
     public void printResults() {
@@ -97,21 +97,18 @@ public class ResultTimeExecution {
 
     private void resultsOfAddMethod() {
         if (this.isAddArrayListFasterThanLinkedList()) {
-            final long differenceTime = this.differenceTime(this.addLinkedListResultTime, this.addArrayListResultTime);
-            final UnityTime unityTime = UnityTime.getInstance(differenceTime);
-            this.logInfo("ArrayList, method add(value) is faster than LinkedList in %s %s ",
+            final UnityTime unityTime = this.differenceTime(this.addLinkedListResultTime, this.addArrayListResultTime);
+            this.logInfo("ArrayList, method add(value) is faster than LinkedList in %s%s ",
                     unityTime.getResultTime(),
                     unityTime.getUnity());
 
         } else if (this.isAddArrayListTimeEqualsToLinkedList()) {
-            final UnityTime unityTime = UnityTime.getInstance(this.addArrayListResultTime);
-            this.logInfo("ArrayList and LinkedList, method add(value) was executed in the same time %s %s",
-                    unityTime.getResultTime(),
-                    unityTime.getUnity());
+            this.logInfo("ArrayList and LinkedList, method add(value) was executed in the same time %s%s",
+                    this.addArrayListResultTime.getResultTime(),
+                    this.addArrayListResultTime.getUnity());
         } else {
-            long differenceTime = this.differenceTime(this.addArrayListResultTime, this.addLinkedListResultTime);
-            final UnityTime unityTime = UnityTime.getInstance(differenceTime);
-            this.logInfo("LinkedList, method add(value) is faster than ArrayList in %s %s ",
+            final UnityTime unityTime = this.differenceTime(this.addArrayListResultTime, this.addLinkedListResultTime);
+            this.logInfo("LinkedList, method add(value) is faster than ArrayList in %s%s ",
                     unityTime.getResultTime(),
                     unityTime.getUnity());
         }
@@ -119,21 +116,18 @@ public class ResultTimeExecution {
 
     private void resultsOfAddMethodUsingRandomPosition() {
         if (this.isAddArrayListInRandomPositionFasterThanLinkedList()) {
-            final long differenceTime = this.differenceTime(this.addLinkedListInRandomPositionResultTime, this.addArrayListInRandomPositionResultTime);
-            final UnityTime unityTime = UnityTime.getInstance(differenceTime);
-            this.logInfo("ArrayList, method add(index, value) using random position is faster than LinkedList in %s %s ",
+            final UnityTime unityTime = this.differenceTime(this.addLinkedListInRandomPositionResultTime, this.addArrayListInRandomPositionResultTime);
+            this.logInfo("ArrayList, method add(index, value) using random position is faster than LinkedList in %s%s ",
                     unityTime.getResultTime(),
                     unityTime.getUnity());
 
         } else if (this.isAddArrayListTimeInRandomPositionEqualsToLinkedList()) {
-            final UnityTime unityTime = UnityTime.getInstance(this.addArrayListInRandomPositionResultTime);
-            this.logInfo("ArrayList and LinkedList, method add(index, value) using random position was executed in the same time %s %s",
-                    unityTime.getResultTime(),
-                    unityTime.getUnity());
+            this.logInfo("ArrayList and LinkedList, method add(index, value) using random position was executed in the same time %s%s",
+                    this.addArrayListInRandomPositionResultTime.getResultTime(),
+                    this.addArrayListInRandomPositionResultTime.getUnity());
         } else {
-            final long differenceTime = this.differenceTime(this.addArrayListInRandomPositionResultTime, this.addLinkedListInRandomPositionResultTime);
-            final UnityTime unityTime = UnityTime.getInstance(differenceTime);
-            this.logInfo("LinkedList, method add(index, value) using random position is faster than ArrayList %s %s ",
+            final UnityTime unityTime = this.differenceTime(this.addArrayListInRandomPositionResultTime, this.addLinkedListInRandomPositionResultTime);
+            this.logInfo("LinkedList, method add(index, value) using random position is faster than ArrayList %s%s ",
                     unityTime.getResultTime(),
                     unityTime.getUnity());
         }
@@ -141,21 +135,18 @@ public class ResultTimeExecution {
 
     private void resultsOfRemoveMethod() {
         if (this.isRemoveFromArrayListFasterThanLinkedList()) {
-            final long differenceTime = this.differenceTime(this.removeElementsFromListRandomlyLinkedListListTime, this.removeElementsFromListRandomlyArrayListTime);
-            final UnityTime unityTime = UnityTime.getInstance(differenceTime);
-            this.logInfo("ArrayList, method remove(index) is faster than LinkedList in %s %s ",
+            final UnityTime unityTime =  this.differenceTime(this.removeElementsFromListRandomlyLinkedListListTime, this.removeElementsFromListRandomlyArrayListTime);
+            this.logInfo("ArrayList, method remove(index) is faster than LinkedList in %s%s ",
                     unityTime.getResultTime(),
                     unityTime.getUnity());
 
         } else if (this.isTimeToRemoveFromArrayListEqualsToLinkedList()) {
-            final UnityTime unityTime = UnityTime.getInstance(this.removeElementsFromListRandomlyArrayListTime);
-            this.logInfo("ArrayList and LinkedList, method remove(index) were executed in the same time %s %s",
-                    unityTime.getResultTime(),
-                    unityTime.getUnity());
+            this.logInfo("ArrayList and LinkedList, method remove(index) were executed in the same time %s%s",
+                    this.removeElementsFromListRandomlyLinkedListListTime.getResultTime(),
+                    this.removeElementsFromListRandomlyLinkedListListTime.getUnity());
         } else {
-            final long differenceTime = this.differenceTime(this.removeElementsFromListRandomlyArrayListTime, this.removeElementsFromListRandomlyLinkedListListTime);
-            final UnityTime unityTime = UnityTime.getInstance(differenceTime);
-            this.logInfo("LinkedList, method remove(index) is faster than ArrayList %s %s ",
+            final UnityTime unityTime = this.differenceTime(this.removeElementsFromListRandomlyArrayListTime, this.removeElementsFromListRandomlyLinkedListListTime);
+            this.logInfo("LinkedList, method remove(index) is faster than ArrayList %s%s ",
                     unityTime.getResultTime(),
                     unityTime.getUnity());
         }
@@ -163,28 +154,25 @@ public class ResultTimeExecution {
 
     private void resultsOfGetMethod() {
         if (this.isGetFromArrayListFasterThanLinkedList()) {
-            final long differenceTime = this.differenceTime(this.getElementsByRandomIndexLinkedListListTime, this.getElementsByRandomIndexArrayListTime);
-            final UnityTime unityTime = UnityTime.getInstance(differenceTime);
-            this.logInfo("ArrayList, method get(index) is faster than LinkedList in %s %s ",
+            final UnityTime unityTime = this.differenceTime(this.getElementsByRandomIndexLinkedListListTime, this.getElementsByRandomIndexArrayListTime);
+            this.logInfo("ArrayList, method get(index) is faster than LinkedList in %s%s ",
                     unityTime.getResultTime(),
                     unityTime.getUnity());
 
         } else if (this.isTimeToGetFromArrayListEqualsToLinkedList()) {
-            final UnityTime unityTime = UnityTime.getInstance(this.getElementsByRandomIndexArrayListTime);
-            this.logInfo("ArrayList and LinkedList, method get(index) were executed in the same time %s %s",
-                    unityTime.getResultTime(),
-                    unityTime.getUnity());
+            this.logInfo("ArrayList and LinkedList, method get(index) were executed in the same time %s%s",
+                    this.getElementsByRandomIndexArrayListTime.getResultTime(),
+                    this.getElementsByRandomIndexArrayListTime.getUnity());
         } else {
-            final long differenceTime = this.differenceTime(this.getElementsByRandomIndexArrayListTime, this.getElementsByRandomIndexLinkedListListTime);
-            final UnityTime unityTime = UnityTime.getInstance(differenceTime);
-            this.logInfo("LinkedList, method get(index) is faster than ArrayList %s %s ",
+            final UnityTime unityTime = this.differenceTime(this.getElementsByRandomIndexArrayListTime, this.getElementsByRandomIndexLinkedListListTime);
+            this.logInfo("LinkedList, method get(index) is faster than ArrayList %s%s ",
                     unityTime.getResultTime(),
                     unityTime.getUnity());
         }
     }
 
-    private long differenceTime(final long longerTime, final long shorterTime) {
-        return longerTime - shorterTime;
+    private UnityTime differenceTime(final UnityTime longerTime, final UnityTime shorterTime) {
+        return UnityTime.getUnityInstance(longerTime.getTimeInNanoseconds() - shorterTime.getTimeInNanoseconds());
     }
 
     private void logInfo(final String values, final Object... params) {
@@ -192,14 +180,14 @@ public class ResultTimeExecution {
     }
 
     static class BuilderResultTimeExecution {
-        private long addArrayListResultTime;
-        private long addLinkedListResultTime;
-        private long addArrayListInRandomPositionResultTime;
-        private long addLinkedListInRandomPositionResultTime;
-        private long removeElementsFromListRandomlyArrayListTime;
-        private long removeElementsFromListRandomlyLinkedListListTime;
-        private long getElementsByRandomIndexArrayListTime;
-        private long getElementsByRandomIndexLinkedListListTime;
+        private UnityTime addArrayListResultTime;
+        private UnityTime addLinkedListResultTime;
+        private UnityTime addArrayListInRandomPositionResultTime;
+        private UnityTime addLinkedListInRandomPositionResultTime;
+        private UnityTime removeElementsFromListRandomlyArrayListTime;
+        private UnityTime removeElementsFromListRandomlyLinkedListListTime;
+        private UnityTime getElementsByRandomIndexArrayListTime;
+        private UnityTime getElementsByRandomIndexLinkedListListTime;
         private int initialNumberElementsToBeAddedAtList;
         private int numberExecutionsOfMethodAdd;
         private int numberExecutionsOfMethodAddUsingRandomIndex;
@@ -207,42 +195,42 @@ public class ResultTimeExecution {
         private int numberExecutionsOfMethodGet;
 
 
-        public BuilderResultTimeExecution withAddArrayListResultTime(final long addArrayListResultTimee) {
+        public BuilderResultTimeExecution withAddArrayListResultTime(final UnityTime addArrayListResultTimee) {
             this.addArrayListResultTime = addArrayListResultTimee;
             return this;
         }
 
-        public BuilderResultTimeExecution withAddLinkedListResultTime(final long addLinkedListResultTime) {
+        public BuilderResultTimeExecution withAddLinkedListResultTime(final UnityTime addLinkedListResultTime) {
             this.addLinkedListResultTime = addLinkedListResultTime;
             return this;
         }
 
-        public BuilderResultTimeExecution withAddArrayListInRandomPositionResultTime(final long addArrayListInRandomPositionResultTime) {
+        public BuilderResultTimeExecution withAddArrayListInRandomPositionResultTime(final UnityTime addArrayListInRandomPositionResultTime) {
             this.addArrayListInRandomPositionResultTime = addArrayListInRandomPositionResultTime;
             return this;
         }
 
-        public BuilderResultTimeExecution withAddLinkedListInRandomPositionResultTime(final long addLinkedListInRandomPositionResultTime) {
+        public BuilderResultTimeExecution withAddLinkedListInRandomPositionResultTime(final UnityTime addLinkedListInRandomPositionResultTime) {
             this.addLinkedListInRandomPositionResultTime = addLinkedListInRandomPositionResultTime;
             return this;
         }
 
-        public BuilderResultTimeExecution withRemoveElementsFromListRandomlyArrayListTime(final long removeElementsFromListRandomlyArrayListTime) {
+        public BuilderResultTimeExecution withRemoveElementsFromListRandomlyArrayListTime(final UnityTime removeElementsFromListRandomlyArrayListTime) {
             this.removeElementsFromListRandomlyArrayListTime = removeElementsFromListRandomlyArrayListTime;
             return this;
         }
 
-        public BuilderResultTimeExecution withRemoveElementsFromListRandomlyLinkedListList(final long removeElementsFromListRandomlyLinkedListList) {
+        public BuilderResultTimeExecution withRemoveElementsFromListRandomlyLinkedListList(final UnityTime removeElementsFromListRandomlyLinkedListList) {
             this.removeElementsFromListRandomlyLinkedListListTime = removeElementsFromListRandomlyLinkedListList;
             return this;
         }
 
-        public BuilderResultTimeExecution withGetElementsByRandomIndexArrayListTime(final long getElementsByRandomIndexArrayListTime) {
+        public BuilderResultTimeExecution withGetElementsByRandomIndexArrayListTime(final UnityTime getElementsByRandomIndexArrayListTime) {
             this.getElementsByRandomIndexArrayListTime = getElementsByRandomIndexArrayListTime;
             return this;
         }
 
-        public BuilderResultTimeExecution withGetElementsByRandomIndexLinkedListListTime(final long getElementsByRandomIndexLinkedListListTime) {
+        public BuilderResultTimeExecution withGetElementsByRandomIndexLinkedListListTime(final UnityTime getElementsByRandomIndexLinkedListListTime) {
             this.getElementsByRandomIndexLinkedListListTime = getElementsByRandomIndexLinkedListListTime;
             return this;
         }

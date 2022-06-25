@@ -6,25 +6,30 @@ public class UnityTime {
     private long resultTime;
 
 
-    public static UnityTime getInstance(final long valueInNanoseconds) {
+    public static UnityTime getUnityInstance(final long valueInNanoseconds) {
         return new UnityTime(valueInNanoseconds);
     }
 
-    private UnityTime(final long timeInNanoseconds) {
+    public UnityTime(final long timeInNanoseconds) {
         super();
         this.timeInNanoseconds = timeInNanoseconds;
         this.buildUnityTime();
     }
 
-    private void buildUnityTime() {
-        if (this.isUinityInSeconds())
-            this.unityTimeEnum = UnityTimeEnum.NANOSECONDS_IN_SECONDS;
-        else if (isUnityInMilliseconds())
-            this.unityTimeEnum = UnityTimeEnum.NANOSECONDS_IN_MILLISECONDS;
-        else
-            this.unityTimeEnum = UnityTimeEnum.NANOSECONDS;
 
-        this.resultTime = this.timeInNanoseconds / this.unityTimeEnum.getValue();
+    //TODO ajustar calculo de unidade de tempo
+    private void buildUnityTime() {
+        if (this.isUinityInSeconds()) {
+            this.unityTimeEnum = UnityTimeEnum.NANOSECONDS_IN_SECONDS;
+            this.resultTime = this.timeInNanoseconds / UnityTimeEnum.NANOSECONDS_IN_SECONDS.getValue();
+        } else if (isUnityInMilliseconds()) {
+            this.unityTimeEnum = UnityTimeEnum.NANOSECONDS_IN_MILLISECONDS;
+            this.resultTime = this.timeInNanoseconds / UnityTimeEnum.NANOSECONDS_IN_MILLISECONDS.getValue();
+        } else {
+            this.unityTimeEnum = UnityTimeEnum.NANOSECONDS;
+            this.resultTime = this.timeInNanoseconds / UnityTimeEnum.NANOSECONDS.getValue();
+        }
+
 
     }
 
@@ -37,8 +42,17 @@ public class UnityTime {
                 timeInNanoseconds < UnityTimeEnum.NANOSECONDS_IN_SECONDS.getValue();
     }
 
+    public long differenceTime(final long longerTime, final long shorterTime) {
+        return longerTime - shorterTime;
+    }
+
     public long getResultTime() {
         return this.resultTime;
+    }
+
+
+    public long getTimeInNanoseconds() {
+        return this.timeInNanoseconds;
     }
 
     public String getUnity() {
